@@ -4,6 +4,9 @@ var clean = function (text) {
   text = text.toLowerCase();
   text = text.replaceAll(/[.,?!'";:()`~]/g, "");
   var words = text.split(" ");
+  words = words.filter(function (x) {
+    return x !== "";
+  });
   return words;
 };
 
@@ -58,6 +61,46 @@ var analyzeText = function (text) {
       word: longestWord,
       length: longestWord.length,
     },
+  };
+};
+
+var findSimilarity = function (text1, text2) {
+  text1 = text1.trim();
+  text2 = text2.trim();
+  if (
+    //check invalid input
+    typeof text1 !== "string" ||
+    typeof text2 !== "string" ||
+    text1 == "" ||
+    text2 == ""
+  )
+    return "Invalid string input";
+
+  var words1 = clean(text1);
+  var words2 = clean(text2);
+  var set1 = new Set();
+  var set2 = new Set();
+  for (var i = 0; i < words1.length; i++) {
+    set1.add(words1[i]);
+  }
+  for (var i = 0; i < words2.length; i++) {
+    set2.add(words2[i]);
+  }
+  var sim1 = 0;
+  var sim2 = 0;
+  for (let item of set1) {
+    if (set2.has(item)) sim1++;
+  }
+  for (let item of set2) {
+    if (set1.has(item)) sim2++;
+  }
+
+  var sim1 = (sim1 / set1.size) * 100;
+  var sim2 = (sim2 / set2.size) * 100;
+  var avgSimilarity = (sim1 + sim2) / 2;
+
+  return {
+    similarity: avgSimilarity,
   };
 };
 

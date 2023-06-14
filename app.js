@@ -1,5 +1,5 @@
 const express = require("express");
-const { analyzeText } = require("./functions");
+const { analyzeText, findSimilarity } = require("./functions");
 const app = express();
 app.use(express.json());
 
@@ -7,19 +7,15 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-const posts = [
-  { id: 1, title: "Post 1" },
-  { id: 2, title: "Post 2" },
-  { id: 3, title: "Post 3" },
-];
-
-app.get("/posts", (req, res) => {
-  res.json(posts);
-});
-
 app.post("/analyze", (req, res) => {
   var text = req.body.text;
   res.json(analyzeText(text));
+});
+
+app.post("/similarity", (req, res) => {
+  var text1 = req.body.text1;
+  var text2 = req.body.text2;
+  res.json(findSimilarity(text1, text2));
 });
 
 const port = process.env.PORT || 3000;
