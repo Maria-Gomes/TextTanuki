@@ -5,16 +5,27 @@ var expect = chai.expect;
 describe("Test /analyzeText", () => {
   describe("Check for empty input", () => {
     it("should give Invalid Input if input empty", () => {
-      const actualResult = analyzeText("");
-
-      expect(actualResult).to.equal("Invalid Input");
+      expect(() => analyzeText("")).to.throw("Invalid input.");
     });
   });
   describe("Check for empty input", () => {
     it("should give Error: Empty string if input is all whitespaces", () => {
-      const actualResult = analyzeText("   ");
+      expect(() => analyzeText("  ")).to.throw("Empty string.");
+    });
+  });
+});
 
-      expect(actualResult).to.equal("Error: Empty string");
+describe("Test /similarity", () => {
+  describe("Check for empty input", () => {
+    it("should give Invalid Input if input empty", () => {
+      expect(() => findSimilarity("", "Text 2.")).to.throw("Invalid input.");
+    });
+  });
+  describe("Check for empty input", () => {
+    it("should give Error: Empty string if input is all whitespaces", () => {
+      expect(() => findSimilarity("Valid string input here", "   ")).to.throw(
+        "Invalid input."
+      );
     });
   });
 });

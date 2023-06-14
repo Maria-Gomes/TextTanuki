@@ -21,7 +21,7 @@ var analyzeText = function (text) {
     //check for invalid input
     throw { status: 400, message: "Invalid input." };
   text = text.trim();
-  if (text === "") throw { status: 500, message: "Empty string." };
+  if (text === "") throw { status: 400, message: "Empty string." };
   for (var i = 0; i < text.length; i++) {
     //find no. of sentences
     if (
