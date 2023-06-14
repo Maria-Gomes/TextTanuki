@@ -4,6 +4,11 @@ app.use(express.json());
 
 const textRouter = require("./routes/textRouter");
 app.use("/text", textRouter);
+app.use(function (err, req, res, next) {
+  res
+    .status(err.status || 500)
+    .json({ status: err.status, message: err.message });
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

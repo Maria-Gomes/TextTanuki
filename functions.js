@@ -19,9 +19,9 @@ var analyzeText = function (text) {
 
   if (typeof text !== "string" || text === "")
     //check for invalid input
-    return "Error";
+    throw { status: 400, message: "Invalid input." };
   text = text.trim();
-  if (text === "") return "Empty string";
+  if (text === "") throw { status: 500, message: "Empty string." };
   for (var i = 0; i < text.length; i++) {
     //find no. of sentences
     if (
@@ -74,7 +74,7 @@ var findSimilarity = function (text1, text2) {
     text1 == "" ||
     text2 == ""
   )
-    return "Invalid string input";
+    throw { status: 400, message: "Invalid input." };
 
   var words1 = clean(text1);
   var words2 = clean(text2);
