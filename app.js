@@ -1,4 +1,5 @@
 const express = require("express");
+const { analyzeText } = require("./functions");
 const app = express();
 app.use(express.json());
 
@@ -16,14 +17,9 @@ app.get("/posts", (req, res) => {
   res.json(posts);
 });
 
-app.post("/posts", (req, res) => {
-  const newPost = {
-    id: 4,
-    title: req.body.title,
-  };
-  posts.push(newPost);
-  // Add the new post to the list of posts
-  res.json(newPost);
+app.post("/analyze", (req, res) => {
+  var text = req.body.text;
+  res.json(analyzeText(text));
 });
 
 const port = process.env.PORT || 3000;
